@@ -11,9 +11,10 @@
           button.kaitoKouho(@click="clickKaitou(k)") {{k}}
     template(v-else)
       .init
-        select(v-model="dan" "multiple")
-          template(v-for="n in [2, 3, 4, 5, 6, 7, 8, 9]")
-            option(:value="n") {{n}}の段
+        template(v-for="n in [2, 3, 4, 5, 6, 7, 8, 9]")
+          input(type="checkbox" v-model="dan" :value="n" :id="'dan-' + n")
+          label(:for="'dan-' + n") {{n}}の段
+          br
         br
         button.start(@click="start()") スタート！
     template(v-if="owari")
@@ -33,7 +34,7 @@ export default {
   data () {
     return {
       started: false,
-      dan: [ 3, 4, 6, 7, 8, 9 ],
+      dan: [ 3 ],
       mondai: [],
       index: 0,
       a: 0,
@@ -44,10 +45,13 @@ export default {
       seikai: false,
       machigai: 0,
       owari: false,
-      audio: new Audio()
+      soundCorrect: null,
+      soundBuzzer: null
     }
   },
   mounted () {
+    this.soundCorrect = window.document.getElementById("sound-correct")
+    this.soundBuzzer = window.document.getElementById("sound-buzzer")
   },
   methods: {
     start () {
@@ -79,10 +83,15 @@ export default {
       if (this.seikai) {// 二重回答防止
         return
       }
-
       this.kaitou = k
+
+      this.soundBuzzer.pause()
+      this.soundBuzzer.currentTime = 0
+      this.soundCorrect.pause()
+      this.soundCorrect.currentTime = 0
+
       if (this.kaitou === this.a * this.b) {
-        window.document.getElementById("sound-correct").play()
+        this.soundCorrect.play()
         this.kekkaMsg = "正解"
         this.seikai = true
         setTimeout(() => {
@@ -95,7 +104,7 @@ export default {
           }
         }, 1000)
       } else {
-        window.document.getElementById("sound-buzzer").play()
+        this.soundBuzzer.play()
         this.kekkaMsg = "ちがうよ"
         this.machigai++
       }
@@ -153,6 +162,8 @@ button.kaitoKouho
   text-align: center
   button
     font-size: 30px
+    &:focus
+      outline: none
 .owari
   text-align: center
   font-size: 45px
