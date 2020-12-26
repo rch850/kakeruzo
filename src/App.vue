@@ -54,6 +54,7 @@ export default {
       // 問題作成
       this.mondai = []
       this.index = 0
+      this.machigai = 0
       for (let i = 0; i < this.dan.length; i++) {
         for (let j = 2; j <= 9; j++) {
           this.mondai.push([this.dan[i], j])
