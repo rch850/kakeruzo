@@ -52,14 +52,14 @@ export default {
   methods: {
     start () {
       // 問題作成
+      this.mondai = []
+      this.index = 0
       for (let i = 0; i < this.dan.length; i++) {
         for (let j = 2; j <= 9; j++) {
           this.mondai.push([this.dan[i], j])
         }
       }
       this.mondai = this.shuffle(this.mondai)
-
-      console.log(this.mondai)
 
       this.shutsudai()
       this.started = true
