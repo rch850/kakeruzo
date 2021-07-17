@@ -1,10 +1,10 @@
 <template lang="pug">
   .container
     .page-header
-      h1 かけ算おぼえるぞ！
+      h1 たし算おぼえるぞ！
     
     template(v-if="started")
-      .mondai {{a}} × {{b}} = {{kaitou}}
+      .mondai {{a}} + {{b}} = {{kaitou}}
       .kekka {{kekkaMsg}}
       .kaitou
         template(v-for="k in kaitouKouho")
@@ -72,7 +72,7 @@ export default {
     shutsudai () {
       this.a = this.mondai[this.index][0]
       this.b = this.mondai[this.index][1]
-      let k0 = (this.a * this.b) - Math.floor(Math.random() * 5)
+      let k0 = (this.a + this.b) - Math.floor(Math.random() * 5)
       this.kaitouKouho = [ k0, k0 + 1, k0 + 2, k0 + 3, k0 + 4 ]
 
       this.kekkaMsg = ""
@@ -90,7 +90,7 @@ export default {
       this.soundCorrect.pause()
       this.soundCorrect.currentTime = 0
 
-      if (this.kaitou === this.a * this.b) {
+      if (this.kaitou === this.a + this.b) {
         this.soundCorrect.play()
         this.kekkaMsg = "正解"
         this.seikai = true
