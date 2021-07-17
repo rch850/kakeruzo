@@ -1,7 +1,7 @@
 <template lang="pug">
   .container
     .page-header
-      h1 かけ算おぼえるぞ！
+      h1 かけ<ruby>算<rp>(</rp><rt>ざん</rt><rp>)</rp></ruby>おぼえるぞ！
     
     template(v-if="started")
       .mondai {{a}} × {{b}} = {{kaitou}}
@@ -13,13 +13,13 @@
       .init
         template(v-for="n in [2, 3, 4, 5, 6, 7, 8, 9]")
           input(type="checkbox" v-model="dan" :value="n" :id="'dan-' + n")
-          label(:for="'dan-' + n") {{n}}の段
+          label(:for="'dan-' + n") {{n}}のだん
           br
         br
         button.start(@click="start()") スタート！
     template(v-if="owari")
       .owari
-        div 点数: {{ getTensu() }} 点
+        div <ruby>点数<rp>(</rp><rt>てんすう</rt><rp>)</rp></ruby>: {{ getTensu() }} <ruby>点<rp>(</rp><rt>てん</rt><rp>)</rp></ruby>
         button(@click="mouichido()") もういちど
 
     audio#sound-correct(preload="auto")
@@ -92,7 +92,7 @@ export default {
 
       if (this.kaitou === this.a * this.b) {
         this.soundCorrect.play()
-        this.kekkaMsg = "正解"
+        this.kekkaMsg = "せいかい！"
         this.seikai = true
         setTimeout(() => {
           this.index++
