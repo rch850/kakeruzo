@@ -45,6 +45,9 @@ export default {
       seikai: false,
       machigai: 0,
       owari: false,
+      // AudioContext を作ることで Safari で2回目以降の play が途中から始まる問題を回避できる。
+      // https://stackoverflow.com/a/54119854/1081774
+      audioCtx: new AudioContext(),
       soundCorrect: null,
       soundBuzzer: null
     }
